@@ -10,4 +10,4 @@ utilizada para fins comerciais sem autorização prévia e por escrito do titula
 
 Contato do titular:
 
-- `sm7f@gmail.com`
+- `herberthamorimm@gmail.com`
