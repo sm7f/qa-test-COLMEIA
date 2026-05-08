@@ -1,8 +1,8 @@
 # Cypress Component Testing
 
-Os testes unitarios nao foram implementados neste repositorio porque o codigo-fonte da aplicacao nao foi fornecido. O alvo entregue para o teste foi apenas a URL publicada.
+Os testes unitários não foram implementados neste repositório porque o código-fonte da aplicação não foi fornecido. O alvo entregue para o teste foi apenas a URL publicada.
 
-Assim que o projeto alvo estiver disponivel, criar pelo menos:
+Assim que o projeto-alvo estiver disponível, criar pelo menos:
 
 - `LoginForm.cy.jsx` ou `LoginForm.cy.tsx`
 - `LoginButton.cy.jsx` ou `LoginButton.cy.tsx`
@@ -10,8 +10,8 @@ Assim que o projeto alvo estiver disponivel, criar pelo menos:
 
 Prioridades:
 
-- renderizacao
-- props obrigatorias
+- renderização
+- props obrigatórias
 - estados de loading
-- validacao local
+- validação local
 - mensagens de erro

@@ -1,5 +1,4 @@
-pasta como base para verificar formas para identificar falhas 
+Pasta-base para consulta de práticas de identificação de falhas:
 
-/home/sm7f/Project/Agente-de-CTF
-
+`/home/sm7f/Project/Agente-de-CTF`
 
