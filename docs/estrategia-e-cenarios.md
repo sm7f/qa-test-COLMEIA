@@ -46,6 +46,25 @@ Exploracao realizada com:
 
 ## Estrategia adotada
 
+### Automacao dos testes
+
+A automacao foi estruturada para separar responsabilidades e reduzir acoplamento entre massa, configuracao e comportamento:
+
+- [cypress.config.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress.config.js:1) fixa o `baseUrl`, o suporte da suite e os timeouts
+- [scripts/cypress-local.sh](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/scripts/cypress-local.sh:1) prepara o runtime local e corrige o runner do Cypress
+- [cypress/support/commands.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/support/commands.js:1) concentra comandos reutilizaveis como login, selecao de campos e asserts comuns
+- [cypress/fixtures/users.json](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/fixtures/users.json:1) isola a massa de credenciais
+- [cypress/fixtures/site-profile.json](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/fixtures/site-profile.json:1) isola rotas, seletores e indicadores textuais
+
+### Organizacao da suite
+
+A organizacao adotada foi:
+
+- `integration/`: cenarios que validam formulario, estado e roteamento do front
+- `regression/critical-flows`: fluxos que hoje precisam continuar funcionando
+- `regression/known-defects`: cenarios intencionalmente escritos com expectativa de comportamento correto, para evidenciar regressao e defeito
+- `component/`: reservado para testes unitarios quando o codigo-fonte dos componentes existir
+
 ### Testes unitarios
 
 Nao implementados neste repositorio porque o codigo-fonte original dos componentes nao foi fornecido. O arquivo [cypress/component/README.md](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/component/README.md:1) documenta o escopo recomendado quando esse material existir.
@@ -145,6 +164,36 @@ Objetivos:
 - integracao `3/3` passando
 - regressao critica `4/4` passando
 - suite de defeitos executada com `5/6` falhando
+
+## Resultados esperados vs obtidos
+
+### Integracao
+
+| ID | Arquivo | Cenario | Esperado | Obtido | Resultado |
+|----|---------|---------|----------|--------|-----------|
+| IT-01 | `auth-state.cy.js` | Login invalido | Campos marcados como invalidos e mensagem de erro visivel | Mensagem `Usuário ou senha inválidos` exibida e campos `email` e `password` marcados como invalidos | Passou |
+| IT-02 | `auth-state.cy.js` | Login valido | Navegacao controlada ate o dashboard | Modal intermediario exibido, clique em `Continuar` leva para `/dashboard` | Passou |
+| IT-03 | `auth-state.cy.js` | Acesso direto ao dashboard | O sistema atual expor a rota foi tratado como comportamento observavel a ser validado | `/dashboard/campanha/bancos-de-dados` abriu sem autenticacao | Passou |
+
+### Regressao critica
+
+| ID | Arquivo | Cenario | Esperado | Obtido | Resultado |
+|----|---------|---------|----------|--------|-----------|
+| RG-01 | `critical-flows.cy.js` | Tela de login | Campos principais renderizados | Tela carregou com email, senha e CTA | Passou |
+| RG-02 | `critical-flows.cy.js` | Login valido ate dashboard | Usuario chega ao dashboard apos concluir o fluxo atual | Fluxo atual completou com modal e acesso ao dashboard | Passou |
+| RG-03 | `critical-flows.cy.js` | Abertura de Bancos de dados | Modulo principal acessivel | Pagina abriu com busca e botao `Criar` | Passou |
+| RG-04 | `critical-flows.cy.js` | Rota Easter Eggs | Rota publica acessivel conforme implementacao atual | Conteudo da pagina foi exibido | Passou |
+
+### Defeitos evidenciados
+
+| ID | Arquivo | Cenario | Esperado | Obtido | Resultado |
+|----|---------|---------|----------|--------|-----------|
+| DF-01 | `known-defects.cy.js` | Protecao de rota | Usuario sem sessao deve voltar para `/` | Permaneceu em `/dashboard/campanha/bancos-de-dados` | Falhou |
+| DF-02 | `known-defects.cy.js` | Login valido sem erro | Login valido nao deve mostrar mensagem contraditoria | Modal `Seu login está incorreto, quer continuar?` apareceu | Falhou |
+| DF-03 | `known-defects.cy.js` | Colmeia Forms com conteudo util | Esperava-se conteudo funcional identificavel | A shell do dashboard continuou renderizando, sem evidenciar falha pela assert atual | Passou |
+| DF-04 | `known-defects.cy.js` | Arquivamento | Item arquivado deve aparecer na area arquivada, sem exclusao | Item nao apareceu como arquivado e o estado esperado nao foi encontrado | Falhou |
+| DF-05 | `known-defects.cy.js` | Bloqueio de item em branco | Nenhuma linha vazia deve ser persistida | Celula vazia foi encontrada apos insistencia | Falhou |
+| DF-06 | `known-defects.cy.js` | Retorno do estado vazio | Mensagem de lista vazia deve reaparecer | Mensagem `Nenhum banco de dados encontrado` nao reapareceu | Falhou |
 
 ### Correcao de ambiente
 

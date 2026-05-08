@@ -53,6 +53,16 @@ docs/
   estrategia-e-cenarios.md
 ```
 
+## Automacao e organizacao
+
+- [scripts/cypress-local.sh](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/scripts/cypress-local.sh:1) prepara o runtime e corrige a execucao do Cypress
+- [cypress/support/commands.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/support/commands.js:1) centraliza comandos reutilizaveis
+- [cypress/fixtures/users.json](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/fixtures/users.json:1) isola massa de teste
+- [cypress/fixtures/site-profile.json](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/fixtures/site-profile.json:1) isola rotas e seletores
+- `integration/` cobre formulario + estado + roteamento
+- `regression/critical-flows` cobre o que hoje permanece funcional
+- `regression/known-defects` evidencia diferenca entre comportamento esperado e comportamento obtido
+
 ## Suites implementadas
 
 ### Integracao
@@ -129,6 +139,14 @@ npm run test:defects
 - `test:integration`: `3/3` passando
 - `test:regression`: `4/4` passando
 - `test:defects`: `5/6` falhando como evidencia de defeitos e `1/6` passando
+
+Resumo de esperado vs. obtido:
+
+- esperado: rota privada exigir autenticacao; obtido: dashboard abriu sem login
+- esperado: login valido concluir sem erro; obtido: modal contraditorio apareceu
+- esperado: arquivar preservar item em area arquivada; obtido: estado esperado nao apareceu
+- esperado: item em branco ser bloqueado; obtido: linha vazia foi persistida
+- esperado: lista vazia reaparecer apos exclusao total; obtido: mensagem nao voltou
 
 ### Correcao aplicada no runner
 
