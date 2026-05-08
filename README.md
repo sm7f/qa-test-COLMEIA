@@ -2,6 +2,43 @@
 
 Suíte criada com base nos insumos iniciais do desafio e exploração controlada do alvo real `https://teste-colmeia-qa.colmeia-corp.com/`.
 
+## Testes da página Easter Eggs
+
+A página `/easter-eggs` passou a ser o primeiro foco da suíte porque ela expõe publicamente a lista interna de defeitos do sistema.
+
+Arquivo principal:
+
+- [cypress/e2e/regression/easter-eggs.cy.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/e2e/regression/easter-eggs.cy.js:1)
+
+Comando de execução:
+
+```bash
+npm run test:easter-eggs
+```
+
+Resultado executado:
+
+- `test:easter-eggs`: `3/3` passando e `2` screenshots gerados em `docs/evidencias/easter-eggs.cy.js/`
+
+Cobertura aplicada:
+
+- valida que a rota `/easter-eggs` é pública e responde sem redirecionamento
+- valida título, mensagem introdutória e texto de contexto da página
+- valida as três categorias expostas: `Login`, `Banco de Dados` e `Colmeia Forms`
+- valida a quantidade de itens por categoria: `2`, `5` e `1`
+- valida os textos dos defeitos listados em cada área
+
+Evidências vinculadas:
+
+- captura da página pública: [cypress/e2e/regression/easter-eggs.cy.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/e2e/regression/easter-eggs.cy.js:22)
+- captura das categorias e contagens: [cypress/e2e/regression/easter-eggs.cy.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/e2e/regression/easter-eggs.cy.js:30)
+- screenshot da página pública: [easter-eggs-pagina-publica.png](./docs/evidencias/easter-eggs.cy.js/easter-eggs-pagina-publica.png)
+- screenshot das categorias e contagens: [easter-eggs-categorias-e-contagens.png](./docs/evidencias/easter-eggs.cy.js/easter-eggs-categorias-e-contagens.png)
+
+![Easter Eggs - Página pública](./docs/evidencias/easter-eggs.cy.js/easter-eggs-pagina-publica.png)
+
+![Easter Eggs - Categorias e contagens](./docs/evidencias/easter-eggs.cy.js/easter-eggs-categorias-e-contagens.png)
+
 ## Resumo da entrega
 
 O trabalho entregue cobre cinco frentes:
@@ -67,6 +104,7 @@ cypress/
     integration/
       auth-state.cy.js
     regression/
+      easter-eggs.cy.js
       critical-flows.cy.js
       known-defects.cy.js
   fixtures/
@@ -77,6 +115,9 @@ cypress/
     e2e.js
 docs/
   evidencias/
+    easter-eggs.cy.js/
+      easter-eggs-pagina-publica.png
+      easter-eggs-categorias-e-contagens.png
     important-evidence.cy.js/
       dashboard-sem-autenticacao.png
       login-valido-modal-contraditorio.png
@@ -96,6 +137,16 @@ docs/
 - `regression/known-defects` evidencia a diferença entre comportamento esperado e comportamento obtido
 
 ## Suítes implementadas
+
+### Easter Eggs
+
+Arquivo: [cypress/e2e/regression/easter-eggs.cy.js](/home/sm7f/Project/Portifolio/Portifolio-Agente/Projetos/qa-test/cypress/e2e/regression/easter-eggs.cy.js:1)
+
+- valida acesso público direto à rota `/easter-eggs`
+- valida o conteúdo introdutório da página
+- valida as categorias `Login`, `Banco de Dados` e `Colmeia Forms`
+- valida as quantidades `2`, `5` e `1` para os itens listados
+- valida os textos dos defeitos exibidos na página
 
 ### Integração
 
@@ -137,6 +188,7 @@ https://teste-colmeia-qa.colmeia-corp.com/
 
 ```bash
 ./scripts/cypress-local.sh verify
+./scripts/cypress-local.sh run --config screenshotsFolder=docs/evidencias --spec 'cypress/e2e/regression/easter-eggs.cy.js'
 ./scripts/cypress-local.sh run --config screenshotsFolder=docs/evidencias --spec 'cypress/e2e/evidence/important-evidence.cy.js'
 ./scripts/cypress-local.sh run --spec 'cypress/e2e/integration/**/*.cy.js'
 ./scripts/cypress-local.sh run --spec 'cypress/e2e/regression/critical-flows.cy.js'
@@ -161,6 +213,7 @@ Foi preparado um runtime local de Node no próprio diretório para viabilizar a 
 export PATH="$PWD/.tools/node-v24.14.1-linux-x64/bin:$PATH"
 npm install
 npx cypress open
+npm run test:easter-eggs
 npm run test:evidence
 npm run test:integration
 npm run test:regression
@@ -171,9 +224,10 @@ npm run test:defects
 
 - `npm install`: executado com sucesso
 - `./scripts/cypress-local.sh verify`: executado com sucesso
+- `test:easter-eggs`: `3/3` passando e `2` screenshots gerados em `docs/evidencias/easter-eggs.cy.js/`
 - `test:evidence`: `4/4` passando e `4` screenshots gerados em `docs/evidencias/`
 - `./scripts/cypress-local.sh run --spec 'cypress/e2e/integration/auth-state.cy.js'`: `3/3` passando
-- `test:regression`: `4/4` passando
+- `test:regression`: `7/7` passando
 - `test:defects`: `5/6` falhando como evidência de defeitos e `1/6` passando
 
 Resumo de esperado vs. obtido:
